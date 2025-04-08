@@ -1,6 +1,6 @@
 export default {
     type: Phaser.AUTO,
-    width: 800,
-    height: 450,
+    width: 450,
+    height: 800,
     parent: 'game-container'
 }
