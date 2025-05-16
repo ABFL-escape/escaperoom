@@ -28,12 +28,21 @@ export default class abertura extends Phaser.Scene {
       .on('pointerdown', () => {
         this.botao1.play('botao1')
 
+        navigator.mediaDevices.
+          getUserMedia({ video: false, audio: true })
+          .then( (stream)  => {
+            this.game.midias = stream;
+          })
+          .catch((error) => {
+            console.error("Erro ao acessar o microfone:", error);
+          });
+  
         this.botao1.on('animationcomplete', () => {
-          this.scene.stop('abertura')
-          this.scene.start('precarregamento')
-        })
+    this.scene.stop('abertura')
+    this.scene.start('precarregamento')
+  })
       })
   }
 
-  update () { }
+update() { }
 }

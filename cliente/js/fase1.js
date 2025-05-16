@@ -27,13 +27,29 @@ export default class Fase1 extends Phaser.Scene {
         if (this.contador <= 0) {
           //this.trilha.stop();
           this.scene.stop();
-          this.scene.start("finalTriste");
+          this.scene.start("fase2");
         }
       },
       callbackScope: this,
       loop: true,
     });
+
+    if (this.game.jogadores.primeiro === this.game.socket.id) {
+      this.game.remoteConnection = new RTCPeerConnection(this.game.iceServers);
+      this.game.dadosJogo = this.game.remoteConnection.createDataChannel(
+        "dadosJogo",
+        { negotated: true, id: 0 }
+      );
+  
+    } else if (this.game.jogadores.segundo === this.game.socket.id) {
+      this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
+      this.game.dadosJogo = this.game.localConnection.createDataChannel(
+        "dadosJogo",
+        { negotiated: true, id: 0 }
+      );
+    }
   }
+
 
 
   update () {
