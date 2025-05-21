@@ -1,14 +1,15 @@
 <html>
     <head>
-        <title>jogo</title>
+        <title>Escape Room</title>
+        <link rel="stylesheet" type="text/css" href="./main.css" />
     </head>
 
     <body>
         <audio id="audio" autoplay></audio>
-        <div id="game-container"></div>
-        <script src="https://cdn.jsdelivr.net/npm/phaser@3.88.2/dist/phaser.min.js"></script>
+        <div class="center" id="game-container"></div>
+        <script src="./js/phaser.min.js"></script>
         <script src="./socket.io/socket.io.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.4/mqtt.min.js"></script>
-        <script type="module" src="js/index.js"></script>
+        <script src="./js/mqtt.min.js"></script>
+        <script type="module" src="./js/index.js"></script>
     </body>
 </html>
