@@ -1,9 +1,9 @@
+/*global Phaser*/
+/*eslint no-undef: "error"*/
 export default class abertura extends Phaser.Scene {
   constructor() {
     super("abertura");
   }
-
-  init() {}
 
   preload() {
     this.load.image("fundo", "assets/abertura-fundo.png");
@@ -43,6 +43,4 @@ export default class abertura extends Phaser.Scene {
         });
       });
   }
-
-  update() {}
 }

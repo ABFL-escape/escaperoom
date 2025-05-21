@@ -1,3 +1,5 @@
+/*global Phaser*/
+/*eslint no-undef: "error"*/
 export default class sala extends Phaser.Scene {
   constructor() {
     super("sala");
@@ -34,17 +36,5 @@ export default class sala extends Phaser.Scene {
         this.scene.start("fase1");
       }
     });
-
-    //this.scene.start('fase1')
-    /* this.add.image(400, 225, 'sala')
-
-    this.botao1 = this.physics.add.image(300, 200, 'vazio')
-      .setInteractive()
-      .on('pointerdown', () => {
-        this.scene.stop()
-        this.scene.start('fase1')
-      })*/
   }
-
-  update() {}
 }

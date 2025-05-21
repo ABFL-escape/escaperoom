@@ -1,7 +1,10 @@
+/*global Phaser*/
+/*eslint no-undef: "error"*/
 export default class Precarregamento extends Phaser.Scene {
   constructor() {
     super("precarregamento");
   }
+  
   init() {
     this.add.rectangle(400, 300, 468, 32).setStrokeStyle(1, 0xffffff);
     const progresso = this.add.rectangle(400 - 230, 300, 4, 28, 0xffffff);
@@ -24,6 +27,4 @@ export default class Precarregamento extends Phaser.Scene {
     this.scene.stop();
     this.scene.start("sala");
   }
-
-  update() {}
 }

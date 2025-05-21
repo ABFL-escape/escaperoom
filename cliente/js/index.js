@@ -1,3 +1,5 @@
+/*global Phaser, io, mqtt*/
+/*eslint no-undef: "error"*/
 import config from "./config.js";
 import abertura from "./abertura.js";
 import precarregamento from "./precarregamento.js";
@@ -11,8 +13,12 @@ class Game extends Phaser.Game {
     super(config);
 
     this.audio = document.querySelector("audio");
+
     this.iceServers = {
       iceServers: [
+        {
+          urls: "stun:feira-de-jogos.dev.br",
+        },
         {
           urls: "stun:stun.l.google.com:19302",
         },
@@ -22,17 +28,8 @@ class Game extends Phaser.Game {
     this.socket = io();
 
     this.socket.on("connect", () => {
-      console.log("Usuário ${this.socket.id} conectado no servidor");
+      console.log(`Usuário ${this.socket.id} conectado no servidor`);
     });
-
-    this.scene.add("abertura", abertura);
-    this.scene.add("precarregamento", precarregamento);
-    this.scene.add("sala", sala);
-    this.scene.add("fase1", fase1);
-    this.scene.add("finalFeliz", finalFeliz);
-    this.scene.add("finalTriste", finalTriste);
-
-    this.scene.start("abertura");
 
     this.mqttClient = mqtt.connect("wss://em.sj.ifsc.edu.br/mqtt/");
 
@@ -43,9 +40,19 @@ class Game extends Phaser.Game {
         console.log("Inscrito no tópico adc20251/escape-room/#");
       });
     });
+
+    this.scene.add("abertura", abertura);
+    this.scene.add("precarregamento", precarregamento);
+    this.scene.add("sala", sala);
+    this.scene.add("fase1", fase1);
+    this.scene.add("finalFeliz", finalFeliz);
+    this.scene.add("finalTriste", finalTriste);
+    
     this.mqttClient.on("message", (topic, message) => {
       console.log(topic, message);
     });
+
+    this.scene.start("abertura");
   }
 }
 
