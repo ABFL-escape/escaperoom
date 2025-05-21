@@ -1,17 +1,17 @@
 export default class Fase1 extends Phaser.Scene {
-  constructor () {
-    super('fase1')
+  constructor() {
+    super("fase1");
   }
-  init () { }
+  init() {}
 
-  preload () {
-    this.load.spritesheet('botao1', 'assets/botao1.png', {
+  preload() {
+    this.load.spritesheet("botao1", "assets/botao1.png", {
       frameWidth: 64,
-      frameHeigth: 64
-    })
+      frameHeigth: 64,
+    });
   }
 
-  create () {
+  create() {
     this.contador = 1200;
     this.contadorTexto = this.add.text(10, 10, `Iniciando...`, {
       fontSize: "32px",
@@ -22,8 +22,10 @@ export default class Fase1 extends Phaser.Scene {
       callback: () => {
         this.contador--;
         const minutos = Math.floor(this.contador / 60);
-        const segundos = Math.floor((this.contador % 60));
-        this.contadorTexto.setText(`Tempo restante: ${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`);
+        const segundos = Math.floor(this.contador % 60);
+        this.contadorTexto.setText(
+          `Tempo restante: ${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`,
+        );
         if (this.contador <= 0) {
           //this.trilha.stop();
           this.scene.stop();
@@ -38,23 +40,16 @@ export default class Fase1 extends Phaser.Scene {
       this.game.remoteConnection = new RTCPeerConnection(this.game.iceServers);
       this.game.dadosJogo = this.game.remoteConnection.createDataChannel(
         "dadosJogo",
-        { negotated: true, id: 0 }
+        { negotated: true, id: 0 },
       );
-  
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
       this.game.dadosJogo = this.game.localConnection.createDataChannel(
         "dadosJogo",
-        { negotiated: true, id: 0 }
+        { negotiated: true, id: 0 },
       );
     }
   }
 
-
-
-  update () {
-
-  }
+  update() {}
 }
-
-

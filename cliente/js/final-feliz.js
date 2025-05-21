@@ -1,15 +1,12 @@
 export default class FinalFeliz extends Phaser.Scene {
-  constructor () {
-    super('final-feliz')
+  constructor() {
+    super("final-feliz");
   }
-  init () { }
+  init() {}
 
-  preload () {
-  
-  }
+  preload() {}
 
-  create () {
-  }
+  create() {}
 
-  update () { }
+  update() {}
 }
