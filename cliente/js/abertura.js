@@ -5,28 +5,36 @@ export default class abertura extends Phaser.Scene {
     super("abertura");
   }
 
+  init() {
+    this.game.cenaAtual = "abertura";
+  }
+
   preload() {
-    this.load.image("fundo", "assets/abertura-fundo.png");
-    this.load.spritesheet("botao1", "assets/botao1.png", {
-      frameWidth: 64,
-      frameHeight: 64,
+    this.load.image("abertura-fundo", "assets/abertura-fundo.png");
+
+    this.load.spritesheet("botao-start", "assets/botao-start.png", {
+      frameWidth: 128,
+      frameHeight: 128,
     });
   }
 
   create() {
-    this.add.image(400, 225, "fundo");
+    this.add.image(400, 225, "abertura-fundo");
 
     this.anims.create({
-      key: "botao1",
-      frames: this.anims.generateFrameNumbers("botao1", { start: 28, end: 31 }),
+      key: "botao-start",
+      frames: this.anims.generateFrameNumbers("botao-start", {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 10,
     });
 
-    this.botao1 = this.add
-      .sprite(440, 360, "botao1", 28)
+    this.botao = this.add
+      .sprite(440, 360, "botao-start")
       .setInteractive()
       .on("pointerdown", () => {
-        this.botao1.play("botao1");
+        this.botao.play("botao-start");
 
         navigator.mediaDevices
           .getUserMedia({ video: false, audio: true })
@@ -37,8 +45,8 @@ export default class abertura extends Phaser.Scene {
             console.error("Erro ao acessar o microfone:", error);
           });
 
-        this.botao1.on("animationcomplete", () => {
-          this.scene.stop("abertura");
+        this.botao.on("animationcomplete", () => {
+          this.scene.stop();
           this.scene.start("precarregamento");
         });
       });
