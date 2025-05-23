@@ -1,60 +1,140 @@
+/*global Phaser*/
+/*eslint no-undef: "error"*/
 export default class Fase1 extends Phaser.Scene {
-  constructor () {
-    super('fase1')
-  }
-  init () { }
-
-  preload () {
-    this.load.spritesheet('botao1', 'assets/botao1.png', {
-      frameWidth: 64,
-      frameHeigth: 64
-    })
+  constructor() {
+    super("fase1");
   }
 
-  create () {
-    this.contador = 1200;
-    this.contadorTexto = this.add.text(10, 10, `Iniciando...`, {
+  init() {
+    this.game.cenaAtual = "fase1";
+    this.game.contador = 1200;
+  }
+
+  preload() {
+    this.load.image("fase1-fundo", "assets/fase1-fundo.png");
+
+    this.load.spritesheet("botao-next", "assets/botao-next.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
+  }
+
+  create() {
+    this.add.image(400, 225, "fase1-fundo");
+
+    this.contadorTexto = this.add.text(350, 100, "", {
       fontSize: "32px",
       fill: "#fff",
-    });
-    this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.contador--;
-        const minutos = Math.floor(this.contador / 60);
-        const segundos = Math.floor((this.contador % 60));
-        this.contadorTexto.setText(`Tempo restante: ${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`);
-        if (this.contador <= 0) {
-          //this.trilha.stop();
-          this.scene.stop();
-          this.scene.start("fase2");
-        }
-      },
-      callbackScope: this,
-      loop: true,
     });
 
     if (this.game.jogadores.primeiro === this.game.socket.id) {
       this.game.remoteConnection = new RTCPeerConnection(this.game.iceServers);
-      this.game.dadosJogo = this.game.remoteConnection.createDataChannel(
-        "dadosJogo",
-        { negotated: true, id: 0 }
-      );
-  
+
+      this.game.remoteConnection.onicecandidate = ({ candidate }) => {
+        this.game.socket.emit("candidate", this.game.sala, candidate);
+      };
+
+      this.game.remoteConnection.ontrack = ({ streams: [stream] }) => {
+        this.game.audio.srcObject = stream;
+      };
+
+      if (this.game.midias) {
+        this.game.midias
+          .getTracks()
+          .forEach((track) =>
+            this.game.remoteConnection.addTrack(track, this.game.midias),
+          );
+      }
+
+      this.game.socket.on("offer", (description) => {
+        this.game.remoteConnection
+          .setRemoteDescription(description)
+          .then(() => this.game.remoteConnection.createAnswer())
+          .then((answer) =>
+            this.game.remoteConnection.setLocalDescription(answer),
+          )
+          .then(() =>
+            this.game.socket.emit(
+              "answer",
+              this.game.sala,
+              this.game.remoteConnection.localDescription,
+            ),
+          );
+      });
+
+      this.game.socket.on("candidate", (candidate) => {
+        this.game.remoteConnection.addIceCandidate(candidate);
+      });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
-      this.game.dadosJogo = this.game.localConnection.createDataChannel(
-        "dadosJogo",
-        { negotiated: true, id: 0 }
-      );
+
+      this.game.localConnection.onicecandidate = ({ candidate }) => {
+        this.game.socket.emit("candidate", this.game.sala, candidate);
+      };
+
+      this.game.localConnection.ontrack = ({ streams: [stream] }) => {
+        this.game.audio.srcObject = stream;
+      };
+
+      if (this.game.midias) {
+        this.game.midias
+          .getTracks()
+          .forEach((track) =>
+            this.game.localConnection.addTrack(track, this.game.midias),
+          );
+      }
+
+      this.game.localConnection
+        .createOffer()
+        .then((offer) => this.game.localConnection.setLocalDescription(offer))
+        .then(() =>
+          this.game.socket.emit(
+            "offer",
+            this.game.sala,
+            this.game.localConnection.localDescription,
+          ),
+        );
+
+      this.game.socket.on("answer", (description) => {
+        this.game.localConnection.setRemoteDescription(description);
+      });
+
+      this.game.socket.on("candidate", (candidate) => {
+        this.game.localConnection.addIceCandidate(candidate);
+      });
+    } else {
+      window.alert("Sala cheia!");
+      this.scene.stop();
+      this.scene.start("sala");
     }
+
+    this.anims.create({
+      key: "botao-next",
+      frames: this.anims.generateFrameNumbers("botao-next", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+    });
+
+    this.botao = this.add
+      .sprite(400, 360, "botao-next")
+      .setInteractive()
+      .on("pointerdown", () => {
+        this.botao.play("botao-next");
+
+        this.game.mqttClient.publish(`${this.game.mqttTopic}fase2`, "start");
+
+        this.botao.on("animationcomplete", () => {
+          this.scene.stop();
+          this.scene.start("fase2");
+        });
+      });
   }
 
-
-
-  update () {
-
+  update() {
+    this.contadorTexto.setText(
+      `${String(this.game.minutos).padStart(2, "0")}:${String(this.game.segundos).padStart(2, "0")}`,
+    );
   }
 }
-
-

@@ -1,48 +1,54 @@
+/*global Phaser*/
+/*eslint no-undef: "error"*/
 export default class abertura extends Phaser.Scene {
-
-  constructor () {
-    super('abertura')
+  constructor() {
+    super("abertura");
   }
 
-  init () { }
-
-  preload () {
-    this.load.image('fundo', 'assets/abertura-fundo.png')
-    this.load.spritesheet('botao1', 'assets/botao1.png', {
-      frameWidth: 64,
-      frameHeight: 64
-    })
+  init() {
+    this.game.cenaAtual = "abertura";
   }
 
-  create () {
-    this.add.image(400, 225, 'fundo')
+  preload() {
+    this.load.image("abertura-fundo", "assets/abertura-fundo.png");
+
+    this.load.spritesheet("botao-start", "assets/botao-start.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
+  }
+
+  create() {
+    this.add.image(400, 225, "abertura-fundo");
 
     this.anims.create({
-      key: 'botao1',
-      frames: this.anims.generateFrameNumbers('botao1', { start: 28, end: 31 }),
-      frameRate: 10
-    })
+      key: "botao-start",
+      frames: this.anims.generateFrameNumbers("botao-start", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+    });
 
-    this.botao1 = this.add.sprite(440, 360, 'botao1', 28)
+    this.botao = this.add
+      .sprite(440, 360, "botao-start")
       .setInteractive()
-      .on('pointerdown', () => {
-        this.botao1.play('botao1')
+      .on("pointerdown", () => {
+        this.botao.play("botao-start");
 
-        navigator.mediaDevices.
-          getUserMedia({ video: false, audio: true })
-          .then( (stream)  => {
+        navigator.mediaDevices
+          .getUserMedia({ video: false, audio: true })
+          .then((stream) => {
             this.game.midias = stream;
           })
           .catch((error) => {
             console.error("Erro ao acessar o microfone:", error);
           });
-  
-        this.botao1.on('animationcomplete', () => {
-    this.scene.stop('abertura')
-    this.scene.start('precarregamento')
-  })
-      })
-  }
 
-update() { }
+        this.botao.on("animationcomplete", () => {
+          this.scene.stop();
+          this.scene.start("precarregamento");
+        });
+      });
+  }
 }
