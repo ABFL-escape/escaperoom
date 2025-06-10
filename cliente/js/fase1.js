@@ -79,6 +79,12 @@ export default class fase1 extends Phaser.Scene {
         `${this.game.mqttTopic}senha`,
         this.game.senha.toString()
       );
+
+      this.game.mqttClient.publish(
+        `${this.game.mqttTopic}caixa`,
+        "fechar"
+      );
+
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
 
