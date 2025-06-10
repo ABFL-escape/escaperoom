@@ -6,6 +6,7 @@ import precarregamento from "./precarregamento.js";
 import sala from "./sala.js";
 import fase1 from "./fase1.js";
 import fase2 from "./fase2.js";
+import fase3 from "./fase3.js";
 import finalFeliz from "./final-feliz.js";
 import finalTriste from "./final-triste.js";
 
@@ -48,8 +49,9 @@ class Game extends Phaser.Game {
     this.scene.add("sala", sala);
     this.scene.add("fase1", fase1);
     this.scene.add("fase2", fase2);
-    this.scene.add("finalFeliz", finalFeliz);
-    this.scene.add("finalTriste", finalTriste);
+    this.scene.add("fase3", fase3);
+    this.scene.add("final-feliz", finalFeliz);
+    this.scene.add("final-triste", finalTriste);
 
     this.mqttClient.on("message", (topic, message) => {
       console.log(topic, message.toString());
@@ -60,6 +62,9 @@ class Game extends Phaser.Game {
       } else if (topic === `${this.mqttTopic}fase2`) {
         this.scene.stop(this.cenaAtual);
         this.scene.start("fase2");
+      } else if (topic === `${this.mqttTopic}fase3`) {
+        this.scene.stop(this.cenaAtual);
+        this.scene.start("fase3");
       } else if (topic === `${this.mqttTopic}final-feliz`) {
         this.scene.stop(this.cenaAtual);
         this.scene.start("final-feliz");
@@ -85,7 +90,7 @@ class Game extends Phaser.Game {
       }
     }, 1000);
 
-    this.cenaAtual = "sala";
+    this.cenaAtual = "abertura";
     this.scene.start(this.cenaAtual);
   }
 }

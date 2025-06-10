@@ -1,16 +1,16 @@
 /*global Phaser*/
 /*eslint no-undef: "error"*/
-export default class fase2 extends Phaser.Scene {
+export default class fase3 extends Phaser.Scene {
   constructor() {
-    super("fase2");
+    super("fase3");
   }
 
   init() {
-    this.game.cenaAtual = "fase2";
+    this.game.cenaAtual = "fase3";
   }
 
   preload() {
-    this.load.image("fase2-fundo", "assets/fase2-fundo.png");
+    this.load.image("fase3-fundo", "assets/fase3-fundo.png");
 
     this.load.spritesheet("botao-next", "assets/botao-next.png", {
       frameWidth: 128,
@@ -19,7 +19,7 @@ export default class fase2 extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 225, "fase2-fundo");
+    this.add.image(400, 225, "fase3-fundo");
 
     this.contadorTexto = this.add.text(350, 100, "", {
       fontSize: "32px",
@@ -33,20 +33,22 @@ export default class fase2 extends Phaser.Scene {
         this.botao.play("botao-next");
 
         this.game.mqttClient.publish(
-          `${this.game.mqttTopic}fase3`,
-          "start",
+          `${this.game.mqttTopic}final-feliz`,
+          "start"
         );
 
         this.botao.on("animationcomplete", () => {
           this.scene.stop();
-          this.scene.start("fase3");
+          this.scene.start("final-feliz");
         });
       });
   }
 
   update() {
     this.contadorTexto.setText(
-      `${String(this.game.minutos).padStart(2, "0")}:${String(this.game.segundos).padStart(2, "0")}`,
+      `${String(this.game.minutos).padStart(2, "0")}:${String(
+        this.game.segundos
+      ).padStart(2, "0")}`
     );
   }
 }

@@ -19,6 +19,7 @@ export default class Precarregamento extends Phaser.Scene {
     this.load.image("fundo", "abertura-fundo.png");
     this.load.image("fase1-fundo", "fase1-fundo.png");
     this.load.image("fase2-fundo", "fase2-fundo.png");
+    this.load.image("fase3-fundo", "fase3-fundo.png");
     this.load.image("sala-fundo", "sala-fundo.png");
     this.load.image("vazio", "vazio.png")
     
