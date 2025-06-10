@@ -42,7 +42,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.remoteConnection.addTrack(track, this.game.midias),
+            this.game.remoteConnection.addTrack(track, this.game.midias)
           );
       }
 
@@ -51,20 +51,34 @@ export default class fase1 extends Phaser.Scene {
           .setRemoteDescription(description)
           .then(() => this.game.remoteConnection.createAnswer())
           .then((answer) =>
-            this.game.remoteConnection.setLocalDescription(answer),
+            this.game.remoteConnection.setLocalDescription(answer)
           )
           .then(() =>
             this.game.socket.emit(
               "answer",
               this.game.sala,
-              this.game.remoteConnection.localDescription,
-            ),
+              this.game.remoteConnection.localDescription
+            )
           );
       });
 
       this.game.socket.on("candidate", (candidate) => {
         this.game.remoteConnection.addIceCandidate(candidate);
       });
+
+      const numbers = [];
+      while (numbers.length < 3) {
+        const randomNum = Math.floor(Math.random() * 5) + 4;
+        if (!numbers.includes(randomNum)) {
+          numbers.push(randomNum);
+        }
+      }
+
+      this.game.senha = numbers.join("");
+      this.game.mqttClient.publish(
+        `${this.game.mqttTopic}senha`,
+        this.game.senha.toString()
+      );
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
 
@@ -80,7 +94,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.localConnection.addTrack(track, this.game.midias),
+            this.game.localConnection.addTrack(track, this.game.midias)
           );
       }
 
@@ -91,8 +105,8 @@ export default class fase1 extends Phaser.Scene {
           this.game.socket.emit(
             "offer",
             this.game.sala,
-            this.game.localConnection.localDescription,
-          ),
+            this.game.localConnection.localDescription
+          )
         );
 
       this.game.socket.on("answer", (description) => {
@@ -134,7 +148,9 @@ export default class fase1 extends Phaser.Scene {
 
   update() {
     this.contadorTexto.setText(
-      `${String(this.game.minutos).padStart(2, "0")}:${String(this.game.segundos).padStart(2, "0")}`,
+      `${String(this.game.minutos).padStart(2, "0")}:${String(
+        this.game.segundos
+      ).padStart(2, "0")}`
     );
   }
 }
