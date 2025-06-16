@@ -34,7 +34,11 @@ export default class fase6 extends Phaser.Scene {
 
         this.game.mqttClient.publish(
           `${this.game.mqttTopic}final-feliz`,
-          "start"
+          "1",
+          {
+            qos: 1,
+            retain: true,
+          }
         );
 
         this.botao.on("animationcomplete", () => {

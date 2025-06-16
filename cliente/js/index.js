@@ -36,15 +36,27 @@ class Game extends Phaser.Game {
       console.log(`Usuário ${this.socket.id} conectado no servidor`);
     });
 
-    this.mqttClient = mqtt.connect("wss://feira-de-jogos.dev.br/mqtt/");
+    this.mqttClient = mqtt.connect("wss://feira-de-jogos.dev.br/mqtt/", {
+      clientId:
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15),
+      clean: false,
+      keepalive: 60,
+    });
     this.mqttTopic = "adc20251/escape-room/";
 
     this.mqttClient.on("connect", () => {
       console.log("Conectado ao broker MQTT");
 
-      this.mqttClient.subscribe(`${this.mqttTopic}#`, () => {
-        console.log("Inscrito no tópico adc20251/escape-room/#");
-      });
+      this.mqttClient.subscribe(
+        `${this.mqttTopic}#`,
+        {
+          qos: 1,
+        },
+        () => {
+          console.log("Inscrito no tópico adc20251/escape-room/#");
+        },
+      );
     });
 
     this.scene.add("abertura", abertura);
