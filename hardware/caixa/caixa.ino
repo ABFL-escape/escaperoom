@@ -10,8 +10,8 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xE0};
 EthernetClient ethClient;
 PubSubClient client(ethClient);
 
-#define CAIXA_0 11
-#define CAIXA_1 12
+#define CAIXA_0 A0
+#define CAIXA_1 A1
 #define LED_BUILTIN 13
 
 void callback(char *topic, byte *payload, unsigned int length)
@@ -28,13 +28,13 @@ void callback(char *topic, byte *payload, unsigned int length)
   if (payload[0] == 'a')
   {
     Serial.println("Abrindo a caixa...");
-    digitalWrite(CAIXA_0, LOW);
+    digitalWrite(CAIXA_0, HIGH);
     digitalWrite(CAIXA_1, LOW);
   }
   else if (payload[0] == 'f')
   {
     Serial.println("Fechando a caixa...");
-    digitalWrite(CAIXA_0, HIGH);
+    digitalWrite(CAIXA_0, LOW);
     digitalWrite(CAIXA_1, HIGH);
   }
   else if (payload[0] == 'e')
@@ -60,6 +60,8 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(CAIXA_0, OUTPUT);
   pinMode(CAIXA_1, OUTPUT);
+  digitalWrite(CAIXA_0,LOW);
+  digitalWrite(CAIXA_1,LOW);
 
   Ethernet.begin(mac);
   while (Ethernet.linkStatus() == LinkOFF)
