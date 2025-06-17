@@ -42,7 +42,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.remoteConnection.addTrack(track, this.game.midias)
+            this.game.remoteConnection.addTrack(track, this.game.midias),
           );
       }
 
@@ -51,14 +51,14 @@ export default class fase1 extends Phaser.Scene {
           .setRemoteDescription(description)
           .then(() => this.game.remoteConnection.createAnswer())
           .then((answer) =>
-            this.game.remoteConnection.setLocalDescription(answer)
+            this.game.remoteConnection.setLocalDescription(answer),
           )
           .then(() =>
             this.game.socket.emit(
               "answer",
               this.game.sala,
-              this.game.remoteConnection.localDescription
-            )
+              this.game.remoteConnection.localDescription,
+            ),
           );
       });
 
@@ -77,14 +77,17 @@ export default class fase1 extends Phaser.Scene {
       this.game.senha = numbers.join("");
       this.game.mqttClient.publish(
         `${this.game.mqttTopic}senha`,
-        this.game.senha.toString()
+        this.game.senha.toString(),
+        {
+          qos: 1,
+          retain: true,
+        },
       );
 
-      this.game.mqttClient.publish(
-        `${this.game.mqttTopic}caixa`,
-        "fechar"
-      );
-
+      this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "1", {
+        qos: 1,
+        retain: true,
+      });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
 
@@ -100,7 +103,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.localConnection.addTrack(track, this.game.midias)
+            this.game.localConnection.addTrack(track, this.game.midias),
           );
       }
 
@@ -111,8 +114,8 @@ export default class fase1 extends Phaser.Scene {
           this.game.socket.emit(
             "offer",
             this.game.sala,
-            this.game.localConnection.localDescription
-          )
+            this.game.localConnection.localDescription,
+          ),
         );
 
       this.game.socket.on("answer", (description) => {
@@ -143,7 +146,10 @@ export default class fase1 extends Phaser.Scene {
       .on("pointerdown", () => {
         this.botao.play("botao-next");
 
-        this.game.mqttClient.publish(`${this.game.mqttTopic}fase2`, "start");
+        this.game.mqttClient.publish(`${this.game.mqttTopic}fase2`, "1", {
+          qos: 1,
+          retain: true,
+        });
 
         this.botao.on("animationcomplete", () => {
           this.scene.stop();
@@ -155,8 +161,8 @@ export default class fase1 extends Phaser.Scene {
   update() {
     this.contadorTexto.setText(
       `${String(this.game.minutos).padStart(2, "0")}:${String(
-        this.game.segundos
-      ).padStart(2, "0")}`
+        this.game.segundos,
+      ).padStart(2, "0")}`,
     );
   }
 }
