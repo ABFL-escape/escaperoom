@@ -76,17 +76,15 @@ export default class fase1 extends Phaser.Scene {
 
       this.game.senha = numbers.join("");
       this.game.mqttClient.publish(
-        `${this.game.mqttTopic}senha`,
+        `${this.game.mqttTopic}caixa`,
         this.game.senha.toString(),
         {
-          qos: 1,
-          retain: true,
+          qos: 1
         },
       );
 
-      this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "1", {
-        qos: 1,
-        retain: true,
+      this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "f", {
+        qos: 1
       });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.game.localConnection = new RTCPeerConnection(this.game.iceServers);
@@ -147,8 +145,7 @@ export default class fase1 extends Phaser.Scene {
         this.botao.play("botao-next");
 
         this.game.mqttClient.publish(`${this.game.mqttTopic}fase2`, "1", {
-          qos: 1,
-          retain: true,
+          qos: 1
         });
 
         this.botao.on("animationcomplete", () => {

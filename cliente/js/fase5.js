@@ -49,22 +49,19 @@ export default class fase5 extends Phaser.Scene {
 
           if (this.senhaDigitada.length === 3) {
             if (this.senhaDigitada === this.game.senha) {
-              this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "0", {
-                qos: 1,
-                retain: true,
+              this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "a", {
+                qos: 1
               });
 
               this.game.mqttClient.publish(`${this.game.mqttTopic}fase6`, "1", {
-                qos: 1,
-                retain: true,
+                qos: 1
               });
 
               this.scene.stop();
               this.scene.start("fase6");
             } else {
-              this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "2", {
-                qos: 1,
-                retain: true,
+              this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "e", {
+                qos: 1
               });
 
               alert("Senha incorreta, tente novamente.");
