@@ -36,8 +36,7 @@ export default class fase4 extends Phaser.Scene {
           `${this.game.mqttTopic}fase5`,
           "1",
           {
-            qos: 1,
-            retain: true,
+            qos: 1
           }
         );
 
