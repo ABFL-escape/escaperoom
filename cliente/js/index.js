@@ -114,7 +114,7 @@ class Game extends Phaser.Game {
 
       if (this.contador <= 0) {
         clearInterval(this.relogio);
-        this.scene.stop();
+        this.scene.stop(this.cenaAtual);
         this.scene.start("final-triste");
       }
     }, 1000);
