@@ -12,20 +12,20 @@ PubSubClient client(ethClient);
 
 #define RELE_1 A0
 #define RELE_2 A1
-#define LED_VERMELHO A2
-#define LED_VERDE A3
-#define QUADRO_7 2
-#define QUADRO_4 3
+#define LED_VERMELHO A3
+#define LED_VERDE A2
+#define QUADRO_7 6
+#define QUADRO_4 5
 #define QUADRO_6 4
-#define QUADRO_5 5
-#define QUADRO_8 6
+#define QUADRO_5 3
+#define QUADRO_8 2
 #define LED_BUILTIN 13
 
 void abrirCaixa()
 {
   Serial.println("Abrindo a caixa...");
 
-  digitalWrite(RELE_1, HIGH);
+  digitalWrite(RELE_1, LOW);
   digitalWrite(RELE_2, LOW);
 
   digitalWrite(LED_VERMELHO, LOW);
@@ -36,9 +36,15 @@ void fecharCaixa()
 {
   Serial.println("Fechando a caixa...");
 
-  digitalWrite(RELE_1, LOW);
+  digitalWrite(RELE_1, HIGH);
   digitalWrite(RELE_2, HIGH);
 
+  digitalWrite(LED_VERMELHO, HIGH);
+  delay(500);
+  digitalWrite(LED_VERMELHO, LOW);
+  delay(500);
+  digitalWrite(LED_VERMELHO, HIGH);
+  delay(500);
   digitalWrite(LED_VERMELHO, LOW);
   digitalWrite(LED_VERDE, LOW);
 }
