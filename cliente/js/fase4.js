@@ -19,39 +19,39 @@ export default class fase4 extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 225, "fase4-fundo");
+    if (this.game.jogadores.primeiro === this.game.socket.id) {
+      this.add.image(400, 225, "fase4-fundo");
 
-    this.contadorTexto = this.add.text(350, 100, "", {
-      fontSize: "32px",
-      fill: "#fff",
-    });
+      this.botao = this.add
+        .sprite(360, 370, "botao-next")
+        .setInteractive()
+        .on("pointerdown", () => {
+          this.botao.play("botao-next");
 
-    this.botao = this.add
-      .sprite(360, 370, "botao-next")
-      .setInteractive()
-      .on("pointerdown", () => {
-        this.botao.play("botao-next");
+          this.game.mqttClient.publish(`${this.game.mqttTopic}fase5`, "1", {
+            qos: 1,
+          });
 
-        this.game.mqttClient.publish(
-          `${this.game.mqttTopic}fase5`,
-          "1",
-          {
-            qos: 1
-          }
-        );
-
-        this.botao.on("animationcomplete", () => {
-          this.scene.stop();
-          this.scene.start("fase5");
+          this.botao.on("animationcomplete", () => {
+            this.scene.stop();
+            this.scene.start("fase5");
+          });
         });
+    } else if (this.game.jogadores.segundo === this.game.socket.id) {
+      this.contadorTexto = this.add.text(150, 100, "", {
+        fontSize: "160px",
+        fill: "#981609",
       });
+    }
   }
 
   update() {
-    this.contadorTexto.setText(
-      `${String(this.game.minutos).padStart(2, "0")}:${String(
-        this.game.segundos
-      ).padStart(2, "0")}`
-    );
+    if (this.game.jogadores.segundo === this.game.socket.id) {
+      this.contadorTexto.setText(
+        `${String(this.game.minutos).padStart(2, "0")}:${String(
+          this.game.segundos
+        ).padStart(2, "0")}`
+      );
+    }
   }
 }

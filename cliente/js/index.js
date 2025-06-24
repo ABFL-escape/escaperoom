@@ -103,8 +103,8 @@ class Game extends Phaser.Game {
       }
     });
 
-    this.contador = 1200;
-    this.minutos = 12;
+    this.contador = 1800;
+    this.minutos = 30;
     this.segundos = 0;
 
     this.relogio = setInterval(() => {
