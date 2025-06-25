@@ -3,7 +3,7 @@
 const socket = io();
 
 document.getElementById("limpar-sala").addEventListener("click", () => {
-  socket.emit("limpar-sala", "1");
+  socket.emit("limpar-sala", 1);
 });
 
 const mqttBrokerUrl = "wss://feira-de-jogos.dev.br/mqtt";
