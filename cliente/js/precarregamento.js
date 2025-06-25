@@ -4,10 +4,10 @@ export default class Precarregamento extends Phaser.Scene {
   constructor() {
     super("precarregamento");
   }
-  
+
   init() {
     this.add.rectangle(400, 300, 468, 32).setStrokeStyle(1, 0xffffff);
-    
+
     const progresso = this.add.rectangle(400 - 230, 300, 4, 28, 0xffffff);
     this.load.on("progress", (progress) => {
       progresso.width = 4 + 460 * progress;
@@ -24,8 +24,8 @@ export default class Precarregamento extends Phaser.Scene {
     this.load.image("fase5-fundo", "fase5-fundo.png");
     this.load.image("fase6-fundo", "fase6-fundo.png");
     this.load.image("sala-fundo", "sala-fundo.png");
-    this.load.image("vazio", "vazio.png")
-    
+    this.load.image("vazio", "vazio.png");
+
     this.load.spritesheet("botao-next", "botao-next.png", {
       frameWidth: 128,
       frameHeight: 128,

@@ -49,8 +49,8 @@ export default class fase4 extends Phaser.Scene {
     if (this.game.jogadores.segundo === this.game.socket.id) {
       this.contadorTexto.setText(
         `${String(this.game.minutos).padStart(2, "0")}:${String(
-          this.game.segundos
-        ).padStart(2, "0")}`
+          this.game.segundos,
+        ).padStart(2, "0")}`,
       );
     }
   }
