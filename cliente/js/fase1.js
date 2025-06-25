@@ -1,4 +1,4 @@
-/*global Phaser*/
+/*global Phaser, WebFont*/
 /*eslint no-undef: "error"*/
 export default class fase1 extends Phaser.Scene {
   constructor() {
@@ -8,6 +8,12 @@ export default class fase1 extends Phaser.Scene {
   init() {
     this.game.cenaAtual = "fase1";
     this.game.contador = 1200;
+
+    WebFont.load({
+      google: {
+        families: ["Gravitas One"],
+      },
+    });
   }
 
   preload() {
@@ -144,9 +150,10 @@ export default class fase1 extends Phaser.Scene {
         this.game.localConnection.addIceCandidate(candidate);
       });
 
-      this.contadorTexto = this.add.text(150, 100, "", {
+      this.contadorTexto = this.add.text(150, 150, "20:00", {
+        fontFamily: "Gravitas One",
         fontSize: "160px",
-        fill: "#981609",
+        color: "#981609"
       });
     } else {
       window.alert("Sala cheia!");
