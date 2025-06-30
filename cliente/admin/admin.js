@@ -6,6 +6,10 @@ document.getElementById("limpar-sala").addEventListener("click", () => {
   socket.emit("limpar-sala", 1);
 });
 
+document.getElementById("iniciar-partida").addEventListener("click", () => {
+  socket.emit("iniciar-partida", 1);
+});
+
 const mqttBrokerUrl = "wss://feira-de-jogos.dev.br/mqtt";
 const client = mqtt.connect(mqttBrokerUrl);
 const logger = document.getElementById("mqtt-logger");

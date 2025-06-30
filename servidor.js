@@ -46,6 +46,10 @@ io.on("connection", (socket) => {
     io.socketsLeave(sala);
   });
 
+  socket.on("iniciar-partida", (sala, description) => {
+    socket.to(sala).emit("iniciar-partida", description);
+  });
+
   socket.on("disconnect", () => {});
 });
 
