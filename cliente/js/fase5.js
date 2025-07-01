@@ -45,7 +45,15 @@ export default class fase5 extends Phaser.Scene {
                   "a",
                   {
                     qos: 1,
-                  },
+                  }
+                );
+
+                this.game.mqttClient.publish(
+                  `${this.game.mqttTopic}projecao`,
+                  "p",
+                  {
+                    qos: 1,
+                  }
                 );
 
                 this.game.mqttClient.publish(
@@ -53,7 +61,7 @@ export default class fase5 extends Phaser.Scene {
                   "1",
                   {
                     qos: 1,
-                  },
+                  }
                 );
 
                 this.scene.stop();
@@ -64,7 +72,7 @@ export default class fase5 extends Phaser.Scene {
                   "e",
                   {
                     qos: 1,
-                  },
+                  }
                 );
 
                 alert("Senha incorreta, tente novamente.");
@@ -86,8 +94,8 @@ export default class fase5 extends Phaser.Scene {
     if (this.game.jogadores.segundo === this.game.socket.id) {
       this.contadorTexto.setText(
         `${String(this.game.minutos).padStart(2, "0")}:${String(
-          this.game.segundos,
-        ).padStart(2, "0")}`,
+          this.game.segundos
+        ).padStart(2, "0")}`
       );
     }
   }
