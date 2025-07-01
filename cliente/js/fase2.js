@@ -38,9 +38,10 @@ export default class fase2 extends Phaser.Scene {
           });
         });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
-      this.contadorTexto = this.add.text(150, 100, "", {
+      this.contadorTexto = this.add.text(150, 150, "20:00", {
+        fontFamily: "Gravitas One",
         fontSize: "160px",
-        fill: "#981609",
+        color: "#981609",
       });
     }
   }

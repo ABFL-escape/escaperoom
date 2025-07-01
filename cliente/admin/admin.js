@@ -17,7 +17,7 @@ const logger = document.getElementById("mqtt-logger");
 client.on("connect", () => {
   logger.innerHTML += "<p>Connected to MQTT broker</p>";
 
-  client.subscribe("#", (err) => {
+  client.subscribe("adc20251/escape-room/#", (err) => {
     if (!err) {
       logger.innerHTML += "<p>Subscribed to all topics</p>";
     } else {
