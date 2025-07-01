@@ -22,19 +22,19 @@ export default class fase6 extends Phaser.Scene {
     if (this.game.jogadores.primeiro === this.game.socket.id) {
       this.add.image(400, 225, "fase6-fundo");
 
+      this.game.mqttClient.publish(`${this.game.mqttTopic}projecao`, "p", {
+        qos: 1,
+      });
+
       this.botao = this.add
         .sprite(360, 370, "botao-next")
         .setInteractive()
         .on("pointerdown", () => {
           this.botao.play("botao-next");
 
-          this.game.mqttClient.publish(
-            `${this.game.mqttTopic}fase7`,
-            "1",
-            {
-              qos: 1,
-            },
-          );
+          this.game.mqttClient.publish(`${this.game.mqttTopic}fase7`, "1", {
+            qos: 1,
+          });
 
           this.botao.on("animationcomplete", () => {
             this.scene.stop();

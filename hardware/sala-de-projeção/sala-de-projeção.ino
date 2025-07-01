@@ -70,7 +70,10 @@ void callback(char *topic, byte *payload, unsigned int length)
   }
 
   if (payload[0] == 'p')
+  {
     piscarSeta();
+    acenderSeta();
+  }
 }
 
 void setup()

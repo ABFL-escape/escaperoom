@@ -49,14 +49,6 @@ export default class fase5 extends Phaser.Scene {
                 );
 
                 this.game.mqttClient.publish(
-                  `${this.game.mqttTopic}projecao`,
-                  "p",
-                  {
-                    qos: 1,
-                  }
-                );
-
-                this.game.mqttClient.publish(
                   `${this.game.mqttTopic}fase6`,
                   "1",
                   {
