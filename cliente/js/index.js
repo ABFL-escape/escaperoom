@@ -10,6 +10,7 @@ import fase3 from "./fase3.js";
 import fase4 from "./fase4.js";
 import fase5 from "./fase5.js";
 import fase6 from "./fase6.js";
+import fase7 from "./fase7.js";
 import finalFeliz from "./final-feliz.js";
 import finalTriste from "./final-triste.js";
 
@@ -22,7 +23,9 @@ class Game extends Phaser.Game {
     this.iceServers = {
       iceServers: [
         {
-          urls: "stun:feira-de-jogos.dev.br",
+          urls: "turns:feira-de-jogos.dev.br",
+          username: "adc20251",
+          credential: "adc20251",
         },
         {
           urls: "stun:stun.l.google.com:19302",
@@ -68,6 +71,7 @@ class Game extends Phaser.Game {
     this.scene.add("fase4", fase4);
     this.scene.add("fase5", fase5);
     this.scene.add("fase6", fase6);
+    this.scene.add("fase7", fase7);
     this.scene.add("final-feliz", finalFeliz);
     this.scene.add("final-triste", finalTriste);
 

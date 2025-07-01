@@ -1,16 +1,16 @@
 /*global Phaser*/
 /*eslint no-undef: "error"*/
-export default class fase6 extends Phaser.Scene {
+export default class fase7 extends Phaser.Scene {
   constructor() {
-    super("fase6");
+    super("fase7");
   }
 
   init() {
-    this.game.cenaAtual = "fase6";
+    this.game.cenaAtual = "fase7";
   }
 
   preload() {
-    this.load.image("fase6-fundo", "assets/fase6-fundo.png");
+    this.load.image("fase7-fundo", "assets/fase7-fundo.png");
 
     this.load.spritesheet("botao-next", "assets/botao-next.png", {
       frameWidth: 128,
@@ -20,7 +20,7 @@ export default class fase6 extends Phaser.Scene {
 
   create() {
     if (this.game.jogadores.primeiro === this.game.socket.id) {
-      this.add.image(400, 225, "fase6-fundo");
+      this.add.image(400, 225, "fase7-fundo");
 
       this.botao = this.add
         .sprite(360, 370, "botao-next")
@@ -29,7 +29,7 @@ export default class fase6 extends Phaser.Scene {
           this.botao.play("botao-next");
 
           this.game.mqttClient.publish(
-            `${this.game.mqttTopic}fase7`,
+            `${this.game.mqttTopic}final-feliz`,
             "1",
             {
               qos: 1,
@@ -38,7 +38,7 @@ export default class fase6 extends Phaser.Scene {
 
           this.botao.on("animationcomplete", () => {
             this.scene.stop();
-            this.scene.start("fase7");
+            this.scene.start("final-feliz");
           });
         });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
