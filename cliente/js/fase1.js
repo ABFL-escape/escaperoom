@@ -7,7 +7,7 @@ export default class fase1 extends Phaser.Scene {
 
   init() {
     this.game.cenaAtual = "fase1";
-    this.game.contador = 1200;
+    this.game.contador = 900;
 
     WebFont.load({
       google: {
