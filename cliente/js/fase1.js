@@ -43,7 +43,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.remoteConnection.addTrack(track, this.game.midias),
+            this.game.remoteConnection.addTrack(track, this.game.midias)
           );
       }
 
@@ -52,14 +52,14 @@ export default class fase1 extends Phaser.Scene {
           .setRemoteDescription(description)
           .then(() => this.game.remoteConnection.createAnswer())
           .then((answer) =>
-            this.game.remoteConnection.setLocalDescription(answer),
+            this.game.remoteConnection.setLocalDescription(answer)
           )
           .then(() =>
             this.game.socket.emit(
               "answer",
               this.game.sala,
-              this.game.remoteConnection.localDescription,
-            ),
+              this.game.remoteConnection.localDescription
+            )
           );
       });
 
@@ -81,7 +81,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.senha.toString(),
         {
           qos: 1,
-        },
+        }
       );
 
       this.game.mqttClient.publish(`${this.game.mqttTopic}caixa`, "f", {
@@ -127,7 +127,7 @@ export default class fase1 extends Phaser.Scene {
         this.game.midias
           .getTracks()
           .forEach((track) =>
-            this.game.localConnection.addTrack(track, this.game.midias),
+            this.game.localConnection.addTrack(track, this.game.midias)
           );
       }
 
@@ -138,8 +138,8 @@ export default class fase1 extends Phaser.Scene {
           this.game.socket.emit(
             "offer",
             this.game.sala,
-            this.game.localConnection.localDescription,
-          ),
+            this.game.localConnection.localDescription
+          )
         );
 
       this.game.socket.on("answer", (description) => {
@@ -164,11 +164,9 @@ export default class fase1 extends Phaser.Scene {
     this.acl = new Accelerometer({ frequency: 60 });
     this.acl.addEventListener("reading", () => {
       if (this.acl.x > 200 || this.acl.y > 200 || this.acl.z > 200)
-        this.mqttClient.publish(
-          `${this.game.mqttTopic}panico`,
-          "PÂNICO",
-          { qos: 1 },
-        );
+        this.mqttClient.publish(`${this.game.mqttTopic}panico`, "PÂNICO", {
+          qos: 1,
+        });
     });
     this.acl.start();
   }
@@ -177,8 +175,8 @@ export default class fase1 extends Phaser.Scene {
     if (this.game.jogadores.segundo === this.game.socket.id) {
       this.contadorTexto.setText(
         `${String(this.game.minutos).padStart(2, "0")}:${String(
-          this.game.segundos,
-        ).padStart(2, "0")}`,
+          this.game.segundos
+        ).padStart(2, "0")}`
       );
     }
   }

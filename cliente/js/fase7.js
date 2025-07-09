@@ -33,7 +33,7 @@ export default class fase7 extends Phaser.Scene {
             "1",
             {
               qos: 1,
-            },
+            }
           );
 
           this.botao.on("animationcomplete", () => {
@@ -54,8 +54,8 @@ export default class fase7 extends Phaser.Scene {
     if (this.game.jogadores.segundo === this.game.socket.id) {
       this.contadorTexto.setText(
         `${String(this.game.minutos).padStart(2, "0")}:${String(
-          this.game.segundos,
-        ).padStart(2, "0")}`,
+          this.game.segundos
+        ).padStart(2, "0")}`
       );
     }
   }
