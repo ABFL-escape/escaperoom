@@ -1,11 +1,15 @@
 <html>
-    <body>
-        <button id="limpar-sala">Limpar Sala</button>
-        <button id="iniciar-partida">Iniciar Partida</button>
-        <div class="center" id="mqtt-logger"></div>
+  <head>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+  </head>
+  <body>
+    <button class="button button-red" id="limpar-sala">Limpar Sala</button>
+    <button class="button button-green" id="iniciar-partida">Iniciar Partida</button>
+    <button class="button button-blue" id="final-feliz">Final Feliz</button>
+    <div class="center" id="mqtt-logger"></div>
 
-        <script src="../socket.io/socket.io.js"></script>
-        <script src="../js/mqtt.min.js"></script>
-        <script src="./admin.js"></script>
-    </body>
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="../js/mqtt.min.js"></script>
+    <script src="./admin.js"></script>
+  </body>
 </html>

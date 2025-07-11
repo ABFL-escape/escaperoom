@@ -20,15 +20,15 @@ export default class fase5 extends Phaser.Scene {
 
       this.senhaDigitada = "";
       this.botoes = [
-        { x: 300, y: 150, numero: 1 },
-        { x: 400, y: 150, numero: 2 },
-        { x: 500, y: 150, numero: 3 },
-        { x: 300, y: 230, numero: 4 },
-        { x: 400, y: 230, numero: 5 },
-        { x: 500, y: 230, numero: 6 },
-        { x: 300, y: 310, numero: 7 },
-        { x: 400, y: 310, numero: 8 },
-        { x: 500, y: 310, numero: 9 },
+        { x: 300, y: 150, numero: "1" },
+        { x: 400, y: 150, numero: "2" },
+        { x: 500, y: 150, numero: "3" },
+        { x: 300, y: 230, numero: "4" },
+        { x: 400, y: 230, numero: "5" },
+        { x: 500, y: 230, numero: "6" },
+        { x: 300, y: 310, numero: "7" },
+        { x: 400, y: 310, numero: "8" },
+        { x: 500, y: 310, numero: "9" },
       ];
 
       this.botoes.forEach((botao) => {

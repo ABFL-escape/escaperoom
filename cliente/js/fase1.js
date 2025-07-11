@@ -161,14 +161,18 @@ export default class fase1 extends Phaser.Scene {
       this.scene.start("sala");
     }
 
-    this.acl = new Accelerometer({ frequency: 60 });
-    this.acl.addEventListener("reading", () => {
-      if (this.acl.x > 200 || this.acl.y > 200 || this.acl.z > 200)
-        this.mqttClient.publish(`${this.game.mqttTopic}panico`, "PÂNICO", {
-          qos: 1,
-        });
-    });
-    this.acl.start();
+    try {
+      this.acl = new Accelerometer({ frequency: 60 });
+      this.acl.addEventListener("reading", () => {
+        if (this.acl.x > 200 || this.acl.y > 200 || this.acl.z > 200)
+          this.mqttClient.publish(`${this.game.mqttTopic}panico`, "PÂNICO", {
+            qos: 1,
+          });
+      });
+      this.acl.start();
+    } catch (error) {
+      console.error("Acelerômetro não suportado:", error);
+    }
   }
 
   update() {

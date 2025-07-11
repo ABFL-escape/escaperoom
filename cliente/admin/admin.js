@@ -27,5 +27,9 @@ client.on("connect", () => {
     client.on("message", (topic, message) => {
       logger.innerHTML += `<p><strong>Topic:</strong> ${topic} <strong>Message:</strong> ${message.toString()}</p>`;
     });
+
+    document.getElementById("final-feliz").addEventListener("click", () => {
+      client.publish("adc20251/escape-room/final-feliz", "iniciar");
+    });
   });
 });

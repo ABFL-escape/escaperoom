@@ -22,25 +22,6 @@ export default class fase7 extends Phaser.Scene {
     if (this.game.jogadores.primeiro === this.game.socket.id) {
       this.add.image(400, 225, "fase7-fundo");
 
-      this.botao = this.add
-        .sprite(360, 370, "botao-next")
-        .setInteractive()
-        .on("pointerdown", () => {
-          this.botao.play("botao-next");
-
-          this.game.mqttClient.publish(
-            `${this.game.mqttTopic}final-feliz`,
-            "1",
-            {
-              qos: 1,
-            }
-          );
-
-          this.botao.on("animationcomplete", () => {
-            this.scene.stop();
-            this.scene.start("final-feliz");
-          });
-        });
     } else if (this.game.jogadores.segundo === this.game.socket.id) {
       this.contadorTexto = this.add.text(150, 150, "20:00", {
         fontFamily: "Gravitas One",
